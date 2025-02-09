@@ -16,6 +16,16 @@ CREATE TABLE IF NOT EXISTS "User" (
 	"email" varchar(64) PRIMARY KEY NOT NULL,
 	"password" varchar(64)
 );
+
+CREATE TABLE IF NOT EXISTS "Space" (
+	"id" text PRIMARY KEY NOT NULL,
+	"name" text NOT NULL,
+	"createdAt" timestamp NOT NULL,
+	"owner" varchar(64) NOT NULL,
+	"description" text NOT NULL,
+	"chatIds" json NOT NULL
+);
+
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "Chat" ADD CONSTRAINT "Chat_author_User_email_fk" FOREIGN KEY ("author") REFERENCES "public"."User"("email") ON DELETE no action ON UPDATE no action;
