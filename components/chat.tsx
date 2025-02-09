@@ -1,6 +1,6 @@
 "use client";
 
-import { Message } from "ai";
+import type { Message } from "ai";
 import { useChat } from "ai/react";
 import { useEffect, useState } from "react";
 import { Files } from "@/components/files";
@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { FileIcon } from "@/components/icons";
 import { Message as PreviewMessage } from "@/components/message";
 import { useScrollToBottom } from "@/components/use-scroll-to-bottom";
-import { Session } from "next-auth";
+import type { Session } from "next-auth";
 
 const suggestedActions = [
   {
@@ -37,9 +37,9 @@ export function Chat({
   >([]);
   const [isFilesVisible, setIsFilesVisible] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-
+  
   useEffect(() => {
-    if (isMounted !== false && session && session.user) {
+    if (isMounted !== false && session?.user) {
       localStorage.setItem(
         `${session.user.email}/selected-file-pathnames`,
         JSON.stringify(selectedFilePathnames),
@@ -52,7 +52,7 @@ export function Chat({
   }, []);
 
   useEffect(() => {
-    if (session && session.user) {
+    if (session?.user) {
       setSelectedFilePathnames(
         JSON.parse(
           localStorage.getItem(
@@ -105,6 +105,7 @@ export function Chat({
                 className={index > 1 ? "hidden sm:block" : "block"}
               >
                 <button
+                  type="button"
                   onClick={async () => {
                     append({
                       role: "user",
@@ -141,6 +142,13 @@ export function Chat({
             onClick={() => {
               setIsFilesVisible(!isFilesVisible);
             }}
+            onKeyUp={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                setIsFilesVisible(!isFilesVisible);
+              }
+            }}
+            // tabIndex={0}
+            // role="button"
           >
             <FileIcon />
             <motion.div
