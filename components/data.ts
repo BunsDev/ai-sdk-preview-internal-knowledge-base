@@ -1,59 +1,71 @@
-export interface Order {
+export interface Space {
   id: string;
   name: string;
-  orderedAt: string;
-  image: string;
+  description: string;
+  owner: string;
+  chatIds: string[];
 }
 
-export const ORDERS: Order[] = [
+export const SPACES: Space[] = [
   {
     id: "539182",
     name: "Apple TV",
-    orderedAt: "2024-08-25",
-    image: "tv.png",
+    description: "Apple TV Description",
+    owner: "Apple TV Owner",
+    chatIds: ["chat1", "chat2", "chat3"],
   },
   {
     id: "281958",
     name: "Apple iPhone 14 Pro",
-    orderedAt: "2024-08-24",
-    image: "iphone.png",
+    description: "Apple iPhone 14 Pro Description",
+    owner: "Apple iPhone 14 Pro Owner",
+    chatIds: ["chat4", "chat5", "chat6"],
   },
   {
     id: "281958",
     name: "Apple Watch Ultra 2",
-    orderedAt: "2024-08-26",
-    image: "watch.png",
+    description: "Apple Watch Ultra 2 Description",
+    owner: "Apple Watch Ultra 2 Owner",
+    chatIds: ["chat7", "chat8", "chat9"],
   },
 ];
 
-export interface TrackingInformation {
-  orderId: string;
-  progress: "Shipped" | "Out for Delivery" | "Delivered";
-  description: string;
+export interface SpacesInformation {
+  spaceId: string;
+  spaceName: string;
+  spaceDescription: string;
+  spaceOwner: string;
+  spaceChatIds: string[];
 }
 
-export const TRACKING_INFORMATION = [
+export const SPACES_INFORMATION: SpacesInformation[] = [
   {
-    orderId: "412093",
-    progress: "Shipped",
-    description: "Last Updated Today 4:30 PM",
+    spaceId: "412093",
+    spaceName: "Space 1",
+    spaceDescription: "Space 1 Description",
+    spaceOwner: "Space 1 Owner",
+    spaceChatIds: ["chat1", "chat2", "chat3"],
   },
   {
-    orderId: "281958",
-    progress: "Out for Delivery",
-    description: "ETA Today 5:45 PM",
+    spaceId: "412094",
+    spaceName: "Space 2",
+    spaceDescription: "Space 2 Description",
+    spaceOwner: "Space 2 Owner",
+    spaceChatIds: ["chat4", "chat5", "chat6"],
   },
   {
-    orderId: "539182",
-    progress: "Delivered",
-    description: "Delivered Today 3:00 PM",
+    spaceId: "412095",
+    spaceName: "Space 3",
+    spaceDescription: "Space 3 Description",
+    spaceOwner: "Space 3 Owner",
+    spaceChatIds: ["chat7", "chat8", "chat9"],
   },
 ];
 
-export const getOrders = () => {
-  return ORDERS;
+export const getSpaces = () => {
+  return SPACES;
 };
 
-export const getTrackingInformation = ({ orderId }: { orderId: string }) => {
-  return TRACKING_INFORMATION.find((info) => info.orderId === orderId);
+export const getSpacesInformation = ({ spaceId }: { spaceId: string }) => {
+  return SPACES_INFORMATION.find((info) => info.spaceId === spaceId);
 };

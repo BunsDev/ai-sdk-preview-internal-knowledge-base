@@ -9,30 +9,41 @@ import { FileIcon } from "@/components/icons";
 import { Message as PreviewMessage } from "@/components/message";
 import { useScrollToBottom } from "@/components/use-scroll-to-bottom";
 import type { Session } from "next-auth";
-// import type { Spaces } from "@/components/spaces";
 
-const suggestedActions = [
+type Space = {
+  id: string;
+  name: string;
+  description: string;
+  owner: string;
+  chatIds: string[];
+}
+
+const savedSpaces: Space[] = [
   {
-    title: "What's the summary",
-    label: "of these documents?",
-    action: "what's the summary of these documents?",
+    id: "1",
+    name: "Space 1",
+    description: "Space 1 Description",
+    owner: "Space 1 Owner",
+    chatIds: ["chat1", "chat2", "chat3"],
   },
   {
-    title: "Who is the author",
-    label: "of these documents?",
-    action: "who is the author of these documents?",
+    id: "2",
+    name: "Space 2",
+    description: "Space 2 Description",
+    owner: "Space 2 Owner",
+    chatIds: ["chat4", "chat5", "chat6"],
   },
-];
+]
 
-const SuggestedActions = ({ id, append }: { id: string, append: (message: Message) => void }) => {
+const SuggestedSpaces = ({ id, append }: { id: string, append: (message: Message) => void }) => {
   return (
     <div className="grid sm:grid-cols-2 gap-2 w-full px-4 md:px-0 mx-auto md:max-w-[500px]">
-            {suggestedActions.map((suggestedAction, index) => (
+            {savedSpaces.map((suggestedAction, index) => (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.05 * index }}
-                key={`${id}-${suggestedAction.action}`}
+                key={`${id}-${suggestedAction.id}`}
                 className={index > 1 ? "hidden sm:block" : "block"}
               >
                 <button
@@ -40,24 +51,24 @@ const SuggestedActions = ({ id, append }: { id: string, append: (message: Messag
                   onClick={async () => {
                     append({
                       role: "user",
-                      content: suggestedAction.action,
+                      content: suggestedAction.name,
                       id: id,
                     });
                   }}
                   className="w-full text-left border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-300 rounded-lg p-2 text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors flex flex-col"
                 >
-                  <span className="font-medium">{suggestedAction.title}</span>
+                  <span className="font-medium">{suggestedAction.name}</span>
                   <span className="text-zinc-500 dark:text-zinc-400">
-                    {suggestedAction.label}
+                    {suggestedAction.description}
                   </span>
           </button>
         </motion.div>
       ))}
       </div>
   );
-};
+}
 
-export function Chat({
+export function Space({
   id,
   initialMessages,
   session,
@@ -129,7 +140,7 @@ export function Chat({
         </div>
 
         {messages.length === 0 && (
-          <SuggestedActions id={id} append={append} />
+          <SuggestedSpaces id={id} append={append} />
         )}
 
         <form
