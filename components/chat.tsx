@@ -83,7 +83,7 @@ export function Chat({
         >
           {messages.map((message, index) => (
             <PreviewMessage
-              key={`${id}-${index}`}
+              key={`${id}-${message.id}`}
               role={message.role}
               content={message.content}
             />
@@ -101,7 +101,7 @@ export function Chat({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.05 * index }}
-                key={index}
+                key={`${id}-${suggestedAction.action}`}
                 className={index > 1 ? "hidden sm:block" : "block"}
               >
                 <button
